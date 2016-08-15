@@ -1,0 +1,18 @@
+{
+  "name": "little-lilly-server",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "firebase": "^3.2.1",
+    "instagram-api": "^1.0.2",
+    "moment": "^2.14.1",
+    "q": "^1.4.1",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": ""
+}
