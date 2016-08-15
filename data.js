@@ -2,7 +2,7 @@
 
 var firebase = require("firebase");
 firebase.initializeApp({
-    serviceAccount: "dev.config.json",
+    serviceAccount: "test.config.json",
     databaseURL: "https://little-lilly-test.firebaseio.com"
 });
 
