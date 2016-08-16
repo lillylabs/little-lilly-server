@@ -1,12 +1,19 @@
 /*jslint node: true */
 
 'use strict';
-
 var firebase = require("firebase");
-firebase.initializeApp({
-  serviceAccount: "test.config.json",
-  databaseURL: "https://little-lilly-test.firebaseio.com"
-});
+
+if ("prod" === process.env.FIREBASE_ENV) {
+  firebase.initializeApp({
+    serviceAccount: "prod.config.json",
+    databaseURL: "https://little-lilly.firebaseio.com"
+  });
+} else {
+  firebase.initializeApp({
+    serviceAccount: "test.config.json",
+    databaseURL: "https://little-lilly-test.firebaseio.com"
+  });
+}
 
 var db = firebase.database();
 

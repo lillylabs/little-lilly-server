@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "dotenv": "^2.0.0",
     "firebase": "^3.2.1",
     "instagram-api": "^1.0.2",
     "moment": "^2.14.1",
