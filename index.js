@@ -3,6 +3,6 @@
 
 'use strict';
 
-var photos = require('./photos.js');
+var photos = require('./app/photos.js');
 
 photos.importPhotosForAllUsers();
