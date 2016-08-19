@@ -1,9 +1,8 @@
 {
   "name": "little-lilly-server",
-  "scripts": {
-  },
+  "scripts": {},
   "env": {
-    "CLIENT_X509_CERT_URL": {
+    "FIREBASE_CLIENT_X509_CERT_URL": {
       "required": true
     },
     "FIREBASE_CLIENT_EMAIL": {
