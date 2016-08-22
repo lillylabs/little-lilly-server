@@ -33,7 +33,19 @@ function savePhotos(uid, photos) {
   return ref.set(photos);
 }
 
+function saveInProgressLetter(uid, letter) {
+  var ref = db.ref("users/" + uid + "/letter_in_progress");
+  return ref.set(letter);
+}
+
+function saveLetter(uid, letter) {
+  var ref = db.ref("users/" + uid + "/letter");
+  return ref.set(letter);
+}
+
 module.exports = {
   fetchUsers: fetchUsers,
-  savePhotos: savePhotos
+  savePhotos: savePhotos,
+  saveLetter: saveLetter,
+  saveInProgressLetter: saveInProgressLetter
 };
