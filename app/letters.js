@@ -21,9 +21,13 @@ function moveLetterToInProgressForUser(uid, letter, defaultGreeting) {
       letter.timeframe.start = start.format(format);
       letter.timeframe.end = end.format(format);
       letter.name = moment(letter.timeframe.start).format("MMMM YYYY");
-
-      letter.greeting = defaultGreeting;
       letter.photos = [];
+
+      if (defaultGreeting) {
+        letter.greeting = defaultGreeting;
+      } else {
+        letter.greeting = null;
+      }
 
       return data.saveLetter(uid, letter).then(function () {
         return "Created new letter and moved current letter to in progress for user " + uid;
