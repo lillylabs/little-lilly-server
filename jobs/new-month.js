@@ -1,4 +1,6 @@
-
+var photos = require('../app/photos.js');
 var letters = require('../app/letters.js');
 
-letters.moveLetterToInProgressForAllUsers();
+photos.importPhotosForAllUsers().then(function() {
+  return letters.moveLetterToInProgressForAllUsers();
+});

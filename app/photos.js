@@ -102,7 +102,7 @@ function fetchPhotosForUser(user) {
 }
 
 function importPhotosForAllUsers() {
-  data.fetchUsers().then(function(users) {
+  return data.fetchUsers().then(function(users) {
     console.log("Users fetched");
 
     var promises = [];
