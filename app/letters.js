@@ -57,12 +57,16 @@ function moveLetterToInProgressForAllUsers() {
 }
 
 function moveInPogressLetterToArchiveForUser(uid, letter) {
-  letter.shipment_date = "2016-08-25";
-  return data.addLetterToArchive(uid, letter).then(function() {
-    return data.removeInProgressLetter();
-  }).then(function() {
-    return "Moved in progress letter for user " + uid + " to archive";
-  });
+  if (letter) {
+    letter.shipment_date = "2016-08-25";
+    return data.addLetterToArchive(uid, letter).then(function() {
+      return data.removeInProgressLetter(uid);
+    }).then(function() {
+      return "Moved in progress letter for user " + uid + " to archive";
+    });
+  } else {
+    return "User " + uid + " has no letter in progress";
+  }
 }
 
 function moveInPogressLetterToArchiveForAllUsers() {

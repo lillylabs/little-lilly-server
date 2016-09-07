@@ -41,13 +41,13 @@ function saveLetter(uid, letter) {
 }
 
 function addLetterToArchive(uid, letter) {
-  var ref = db.ref("archive/" + uid + "/letters");
-  return ref.push(letter);
+  var ref = db.ref("archive/" + uid + "/letters/" + letter.shipment_date);
+  return ref.set(letter);
 }
 
 function removeInProgressLetter(uid) {
   var ref = db.ref("users/" + uid + "/letter_in_progress");
-  return ref.set(null);
+  return ref.remove();
 }
 
 module.exports = {
