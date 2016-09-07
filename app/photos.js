@@ -1,7 +1,3 @@
-/*jslint node: true */
-/*jslint nomen: true */
-
-'use strict';
 
 var q = require('q');
 var _ = require('underscore');
@@ -13,14 +9,13 @@ var TAGS = ['lillygram', 'lillygram'];
 
 function isSelected(photo) {
   var selected = false;
-  _.each(TAGS, function (TAG) {
+  _.each(TAGS, function(TAG) {
     selected = _.indexOf(photo.tags, TAG) > -1;
   });
   return selected;
 }
 
 function isWithinTimeframe(timeframe, photo) {
-
   timeframe = {
     start: moment(timeframe.start),
     end: moment(timeframe.end)
@@ -43,7 +38,7 @@ function isNewerThanTimeFrameStart(timeframe, photo) {
 
 function filterPhotos(photos, timeframe) {
   var filtredPhotos = [];
-  _.each(photos, function (photo) {
+  _.each(photos, function(photo) {
     if (isSelected(photo) && isWithinTimeframe(timeframe, photo)) {
       filtredPhotos.push(photo);
     }
@@ -52,7 +47,6 @@ function filterPhotos(photos, timeframe) {
 }
 
 function fetchPhotos(params) {
-
   var options = {};
 
   if (params.pagination && params.pagination.next_max_id) {
@@ -65,19 +59,18 @@ function fetchPhotos(params) {
 
   console.log("Instagram: Fetch photos with options ", options);
 
-  params.ig.userSelfMedia(options).then(function (response) {
-
-    if (!response.data) {
+  params.ig.userSelfMedia(options).then(function(response) {
+    if (response.data) {
+      console.log("Instagram: Response data");
+    } else {
       console.log("Instagram: No response data, ", response);
       return;
-    } else {
-      console.log("Instagram: Response data");
     }
 
-    if (!params.photos) {
-      params.photos = response.data;
-    } else {
+    if (params.photos) {
       params.photos = params.photos.concat(response.data);
+    } else {
+      params.photos = response.data;
     }
 
     if (response.pagination && response.pagination.next_url && isNewerThanTimeFrameStart(params.timeframe, params.photos[params.photos.length - 1])) {
@@ -94,15 +87,14 @@ function fetchPhotos(params) {
 }
 
 function fetchPhotosForUser(user) {
-
-  var account = _.first(_.toArray(user.profile.ig_accounts)),
-    ig = new InstagramAPI(account.token),
-    deferred = q.defer(),
-    params = {
-      ig: ig,
-      timeframe: user.letter.timeframe,
-      deferred: deferred
-    };
+  var account = _.first(_.toArray(user.profile.ig_accounts));
+  var ig = new InstagramAPI(account.token);
+  var deferred = q.defer();
+  var params = {
+    ig: ig,
+    timeframe: user.letter.timeframe,
+    deferred: deferred
+  };
 
   fetchPhotos(params);
 
@@ -110,29 +102,27 @@ function fetchPhotosForUser(user) {
 }
 
 function importPhotosForAllUsers() {
-  data.fetchUsers().then(function (users) {
-
+  data.fetchUsers().then(function(users) {
     console.log("Users fetched");
 
     var promises = [];
 
-    _.each(users.val(), function (user, uid) {
+    _.each(users.val(), function(user, uid) {
       console.log(uid);
-      var promise = fetchPhotosForUser(user).then(function (photos) {
-        return data.savePhotos(uid, photos).then(function () {
+      var promise = fetchPhotosForUser(user).then(function(photos) {
+        return data.savePhotos(uid, photos).then(function() {
           return "Saved " + photos.length + " photos for user " + uid;
         });
       });
 
       promises.push(promise);
-
     });
 
-    return q.all(promises).then(function (results) {
-      _.each(results, function (result) {
+    return q.all(promises).then(function(results) {
+      _.each(results, function(result) {
         console.log(result);
       });
-    }, function (error) {
+    }, function(error) {
       console.log("ERROR", error);
     });
   });
