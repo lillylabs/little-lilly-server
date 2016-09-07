@@ -40,9 +40,21 @@ function saveLetter(uid, letter) {
   return ref.set(letter);
 }
 
+function addLetterToArchive(uid, letter) {
+  var ref = db.ref("archive/" + uid + "/letters");
+  return ref.push(letter);
+}
+
+function removeInProgressLetter(uid) {
+  var ref = db.ref("users/" + uid + "/letter_in_progress");
+  return ref.set(null);
+}
+
 module.exports = {
   fetchUsers: fetchUsers,
   savePhotos: savePhotos,
   saveLetter: saveLetter,
-  saveInProgressLetter: saveInProgressLetter
+  saveInProgressLetter: saveInProgressLetter,
+  addLetterToArchive: addLetterToArchive,
+  removeInProgressLetter: removeInProgressLetter
 };

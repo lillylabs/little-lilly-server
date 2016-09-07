@@ -56,6 +56,38 @@ function moveLetterToInProgressForAllUsers() {
   });
 }
 
+function moveInPogressLetterToArchiveForUser(uid, letter) {
+  letter.shipment_date = "2016-08-25";
+  return data.addLetterToArchive(uid, letter).then(function() {
+    return data.removeInProgressLetter();
+  }).then(function() {
+    return "Moved in progress letter for user " + uid + " to archive";
+  });
+}
+
+function moveInPogressLetterToArchiveForAllUsers() {
+  data.fetchUsers().then(function(users) {
+    console.log("Users fetched");
+
+    var promises = [];
+
+    _.each(users.val(), function(user, uid) {
+      var promise = moveInPogressLetterToArchiveForUser(uid, user.letter_in_progress);
+
+      promises.push(promise);
+    });
+
+    return q.all(promises).then(function(results) {
+      _.each(results, function(result) {
+        console.log(result);
+      });
+    }, function(error) {
+      console.log("ERROR", error);
+    });
+  });
+}
+
 module.exports = {
-  moveLetterToInProgressForAllUsers: moveLetterToInProgressForAllUsers
+  moveLetterToInProgressForAllUsers: moveLetterToInProgressForAllUsers,
+  moveInPogressLetterToArchiveForAllUsers: moveInPogressLetterToArchiveForAllUsers
 };
