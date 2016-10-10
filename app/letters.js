@@ -58,7 +58,7 @@ function moveLetterToInProgressForAllUsers() {
 
 function moveInPogressLetterToArchiveForUser(uid, letter) {
   if (letter) {
-    letter.shipment_date = "2016-08-25";
+    letter.shipment_date = "2016-09-12";
     return data.addLetterToArchive(uid, letter).then(function() {
       return data.removeInProgressLetter(uid);
     }).then(function() {
