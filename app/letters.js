@@ -56,9 +56,9 @@ function moveLetterToInProgressForAllUsers() {
   });
 }
 
-function moveInPogressLetterToArchiveForUser(uid, letter) {
+function moveInPogressLetterToArchiveForUser(uid, letter, shipmentDate) {
   if (letter) {
-    letter.shipment_date = "2016-09-12";
+    letter.shipment_date = shipmentDate;
     return data.addLetterToArchive(uid, letter).then(function() {
       return data.removeInProgressLetter(uid);
     }).then(function() {
@@ -69,14 +69,14 @@ function moveInPogressLetterToArchiveForUser(uid, letter) {
   }
 }
 
-function moveInPogressLetterToArchiveForAllUsers() {
+function moveInPogressLetterToArchiveForAllUsers(shipmentDate) {
   data.fetchUsers().then(function(users) {
     console.log("Users fetched");
 
     var promises = [];
 
     _.each(users.val(), function(user, uid) {
-      var promise = moveInPogressLetterToArchiveForUser(uid, user.letter_in_progress);
+      var promise = moveInPogressLetterToArchiveForUser(uid, user.letter_in_progress, shipmentDate);
 
       promises.push(promise);
     });
