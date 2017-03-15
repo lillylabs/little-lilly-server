@@ -1,4 +1,4 @@
 
 var letters = require('../app/letters.js');
 
-letters.moveInPogressLetterToArchiveForAllUsers('2016-12-16');
+letters.moveInPogressLetterToArchiveForAllUsers('2017-02-21');
